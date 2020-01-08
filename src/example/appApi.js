@@ -1,4 +1,4 @@
-import axios from './../lib/apiService';
+import axios from './apiService';
 import APILockService from '../lib/APILockService';
 
 /**

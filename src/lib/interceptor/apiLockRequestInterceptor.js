@@ -1,4 +1,4 @@
-import APILockService from '../lib/APILockService';
+import APILockService from '../APILockService';
 
 export async function apiRequestLockInterceptor(config) {
 

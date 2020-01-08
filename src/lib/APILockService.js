@@ -41,4 +41,6 @@ class APILockService {
     }
 }
 
-export default new APILockService();
+const apiServiceInstance = new APILockService();
+
+export default apiServiceInstance;
