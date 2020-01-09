@@ -8,7 +8,7 @@ If there are concurrent API calls in your application where you want implement m
 For instance lets say our app needs an apiToken to be passed in headers for authorization. We would want to fetch this token before any APIs are triggered from browser. If these APIs are concurrent then we need some locking mechanism which could wait for the apiToken and then call other APIs. Lets implement this solution using APILockService.
 
 First we create axios instance 
-```
+```javascript
 import axios from  'axios';
 import { apiRequestLockInterceptor } from  '../interceptor/apiLockRequestInterceptor'; 
 
@@ -18,7 +18,7 @@ instance.interceptors.request.use(apiRequestLockInterceptor);
 Use a request interceptor called *apiRequestLockInterceptor* that checks for lock on API service and waits until the lock is released. This interceptor is exported along with APILockService from src/lib/index.js
 
 Next, we create an axios request that will fetch us apiToken
-```
+```javascript
 function getAppToken() {
 	const lockToken = new Date().toISOString();
 	const options = {
@@ -38,7 +38,7 @@ function getAppToken() {
 }
 ```
 Lets create another request which will fetch app data for us.
-```
+```javascript
 function getAppData(token) {
 	const options = {
 		method: 'get',
@@ -51,7 +51,7 @@ function getAppData(token) {
 }
 ```
 Normally, if we wanted to implement this we would need to do something like this.
-```
+```javascript
 getAppToken()
 .then(() => {
 	return getAppDate();
@@ -59,7 +59,7 @@ getAppToken()
 ```
 
 But with APILockService we call these APIs like this and the service makes sure app data is requested after the lock is released from by getAppToken call.
-```
+```javascript
 // ........ in main app js .......
 getAppToken();
 getAppData();
